@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    @keyframes scaleRotateFade {
+      0% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(2) rotateY(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes scaleRotateFade2 {
+      0% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(2) rotateY(360deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleRotateFadeBackwards {
+      0% {
+        transform: scale(2) rotateY(360deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleRotateFadeBackwards2 {
+      0% {
+        transform: scale(2) rotateY(360deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white ">
+
+  <div class="fixed flex flex-col items-center justify-center h-screen w-screen">
+    <img class="animate-[wiggle_.8s_ease-in-out_infinite]" src="src/envelope.png" alt="envelope" id="envelope">
+    <h1 class="mt-32" id="c-anywhere">Click Anywhere!</h1>
+  </div>
+
+  <div id="secondDiv" class="fixed flex flex-col items-center justify-center h-screen w-screen">
+    <img class="h-[300px] opacity-0 rounded-3xl" src="src/greeting_card.png" alt="greeting_card" id="g_card">
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const g_card = document.getElementById('g_card');
+    const text = document.getElementById('c-anywhere');
+
+    function delay(x){
+        setTimeout(() => {
+          //delay xms
+        }, x);
+    }
+
+    document.addEventListener('click', () => {
+      if (envelope.classList.contains('animate-[wiggle_.8s_ease-in-out_infinite]')) {
+        // go to second animation
+        envelope.classList.remove('animate-[wiggle_.8s_ease-in-out_infinite]');
+        envelope.classList.remove('animate-[scaleRotateFadeBackwards_.4s_ease-in_forwards]');
+        g_card.classList.remove('animate-[scaleRotateFadeBackwards2_.4s_ease-in_forwards]');
+        void envelope.offsetWidth; // reflow
+        envelope.classList.add('animate-[scaleRotateFade_.4s_ease-in_forwards]');
+        g_card.classList.add('animate-[scaleRotateFade2_.4s_ease-in_forwards]');
+        text.classList.add('opacity-0');
+      } else {
+        // back to first animation
+        envelope.classList.remove('animate-[scaleRotateFade_.4s_ease-in_forwards]');
+        g_card.classList.remove('animate-[scaleRotateFade2_.4s_ease-in_forwards]');
+        envelope.classList.add('animate-[scaleRotateFadeBackwards_.4s_ease-in_forwards]');
+        g_card.classList.add('animate-[scaleRotateFadeBackwards2_.4s_ease-in_forwards]');
+        void envelope.offsetWidth;
+        setTimeout(() => {
+            envelope.classList.remove('animate-[scaleRotateFadeBackwards_.4s_ease-in_forwards]');
+            //envelope.classList.add('animate-[wiggle_.8s_ease-in-out_infinite]');
+            //text.classList.remove('opacity-0');
+          }, 800);
+        void envelope.offsetWidth;
+        setTimeout(() => {
+            //g_card.classList.remove('animate-[scaleRotateFadeBackwards2_.4s_ease-in_forwards]');
+            envelope.classList.add('animate-[wiggle_.8s_ease-in-out_infinite]');
+            text.classList.remove('opacity-0');
+          }, 810);
+        setTimeout(() => {
+            console.log(envelope.classList);
+          }, 820);
+        }
+    });
+  </script>
+</body>
+</html>
